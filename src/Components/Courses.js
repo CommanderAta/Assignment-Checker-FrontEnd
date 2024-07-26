@@ -6,16 +6,32 @@ import './Courses.css';
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [courseName, setCourseName] = useState('');
+  const [userRole, setUserRole] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
+    fetchUserRole();
     fetchCourses();
   }, []);
+
+  const fetchUserRole = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/user/role`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setUserRole(response.data.role);
+    } catch (error) {
+      console.error('Error fetching user role:', error.response.data);
+    }
+  };
 
   const fetchCourses = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('/courses', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/courses`, {
         headers: {
           Authorization: token,
         },
@@ -30,7 +46,7 @@ const Courses = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('/courses', { name: courseName }, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/courses`, { name: courseName }, {
         headers: {
           Authorization: token,
         },
@@ -45,23 +61,29 @@ const Courses = () => {
   return (
     <div className="courses-container">
       <h2>Courses</h2>
-      <form onSubmit={handleCreateCourse}>
-        <input
-          type="text"
-          placeholder="Course Name"
-          value={courseName}
-          onChange={(e) => setCourseName(e.target.value)}
-          required
-        />
-        <button type="submit">Create Course</button>
-      </form>
-      <ul>
-        {courses.map((course) => (
-          <li key={course._id} onClick={() => navigate(`/assessments/${course._id}`)}>
-            {course.name}
-          </li>
-        ))}
-      </ul>
+      {userRole === 'professor' && (
+        <form onSubmit={handleCreateCourse}>
+          <input
+            type="text"
+            placeholder="Course Name"
+            value={courseName}
+            onChange={(e) => setCourseName(e.target.value)}
+            required
+          />
+          <button type="submit">Create Course</button>
+        </form>
+      )}
+      {courses.length === 0 ? (
+        <p>No courses yet</p>
+      ) : (
+        <ul>
+          {courses.map((course) => (
+            <li key={course._id} onClick={() => navigate(`/assessments/${course._id}`)}>
+              {course.name}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

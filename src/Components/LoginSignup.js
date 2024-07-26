@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './LoginSignup.css';
 
-const LoginSignup = () => {
+const LoginSignup = ({ onLogin }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ username: '', password: '', role: 'student' });
   const navigate = useNavigate();
@@ -18,11 +18,12 @@ const LoginSignup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = isLogin ? '/user/login' : '/user/signup';
+    const url = isLogin ? `${process.env.REACT_APP_API_URL}/user/login` : `${process.env.REACT_APP_API_URL}/user/signup`;
     try {
       const response = await axios.post(url, formData);
       if (isLogin) {
         localStorage.setItem('token', response.data.token);
+        onLogin(); // Call the onLogin prop to update the user state
         navigate('/courses');
       } else {
         alert('User created successfully');

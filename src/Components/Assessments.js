@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './Assessments.css';
 
 const Assessments = () => {
@@ -8,15 +8,32 @@ const Assessments = () => {
   const [assessments, setAssessments] = useState([]);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [userRole, setUserRole] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
+    fetchUserRole();
     fetchAssessments();
   }, [courseId]);
+
+  const fetchUserRole = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/user/role`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setUserRole(response.data.role);
+    } catch (error) {
+      console.error('Error fetching user role:', error.response.data);
+    }
+  };
 
   const fetchAssessments = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`/assessments/${courseId}`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/assessments/${courseId}`, {
         headers: {
           Authorization: token,
         },
@@ -31,7 +48,7 @@ const Assessments = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('/assessments', { title, content, courseId }, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/assessments`, { title, content, courseId }, {
         headers: {
           Authorization: token,
         },
@@ -44,28 +61,38 @@ const Assessments = () => {
     }
   };
 
+  const handleAssessmentClick = (assessmentId) => {
+    if (userRole === 'professor') {
+      navigate(`/submissions/${assessmentId}`);
+    } else {
+      navigate(`/upload/${assessmentId}`);
+    }
+  };
+
   return (
     <div className="assessments-container">
       <h2>Assessments</h2>
-      <form onSubmit={handleCreateAssessment}>
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <textarea
-          placeholder="Content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
-        ></textarea>
-        <button type="submit">Create Assessment</button>
-      </form>
+      {userRole === 'professor' && (
+        <form onSubmit={handleCreateAssessment}>
+          <input
+            type="text"
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+          <textarea
+            placeholder="Content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            required
+          ></textarea>
+          <button type="submit">Create Assessment</button>
+        </form>
+      )}
       <ul>
         {assessments.map((assessment) => (
-          <li key={assessment._id}>
+          <li key={assessment._id} onClick={() => handleAssessmentClick(assessment._id)}>
             {assessment.title}
           </li>
         ))}

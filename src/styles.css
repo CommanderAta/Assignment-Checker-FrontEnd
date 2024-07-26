@@ -16,6 +16,10 @@ body {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
       monospace;
   }
+
+  .content {
+    padding-top: 60px; /* Adjust this based on the height of your AppBar */
+  }  
   
   .container {
     max-width: 800px;
