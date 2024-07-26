@@ -6,10 +6,12 @@ import './LoginSignup.css';
 const LoginSignup = ({ onLogin }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ username: '', password: '', role: 'student' });
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
+    setError(null); // Clear error on form toggle
   };
 
   const handleChange = (e) => {
@@ -30,8 +32,8 @@ const LoginSignup = ({ onLogin }) => {
         setIsLogin(true);
       }
     } catch (error) {
-      console.error('Error:', error.response.data);
-      alert(error.response.data.error);
+      console.error('Error:', error);
+      setError(error.response ? error.response.data.error : 'An error occurred');
     }
   };
 
@@ -63,6 +65,7 @@ const LoginSignup = ({ onLogin }) => {
             </select>
           )}
           <button type="submit">{isLogin ? 'Login' : 'Sign Up'}</button>
+          {error && <p className="error">{error}</p>}
         </form>
         <button className="toggle-btn" onClick={toggleForm}>
           {isLogin ? 'Don\'t have an account? Sign Up' : 'Already have an account? Login'}
