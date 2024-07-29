@@ -7,9 +7,9 @@
 }
 
 .auth-form {
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 10px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 300px;
   text-align: center;
@@ -17,26 +17,26 @@
 
 .auth-form h2 {
   margin-bottom: 20px;
-  color: #333;
 }
 
-.auth-form input, .auth-form select {
+.auth-form input,
+.auth-form select {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 4px;
 }
 
 .auth-form button {
   width: 100%;
   padding: 10px;
-  margin: 10px 0;
   background-color: #007bff;
-  color: white;
   border: none;
-  border-radius: 5px;
+  color: white;
+  border-radius: 4px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .auth-form button:hover {
@@ -44,13 +44,19 @@
 }
 
 .toggle-btn {
+  margin-top: 10px;
   background: none;
   border: none;
   color: #007bff;
   cursor: pointer;
-  margin-top: 10px;
+  text-decoration: underline;
 }
 
 .toggle-btn:hover {
-  text-decoration: underline;
+  color: #0056b3;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
 }

@@ -1,0 +1,41 @@
+.course-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .course-form-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .course-form-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .course-form-container input,
+  .course-form-container textarea,
+  .course-form-container select {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .course-form-container button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .course-form-container button:hover {
+    background-color: #0056b3;
+  }
+  

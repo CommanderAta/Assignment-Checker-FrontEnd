@@ -43,7 +43,7 @@ const FileUpload = ({ onUploadComplete }) => {
   const handleFileUpload = async () => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('message', message);
+    formData.append('message', 'Check');
     formData.append('assessmentId', assessmentId);
 
     try {
@@ -83,7 +83,7 @@ const FileUpload = ({ onUploadComplete }) => {
   return (
     <div className="container">
       <input type="file" onChange={handleFileChange} />
-      <input type="text" placeholder="Enter your message" value={message} onChange={handleMessageChange} />
+      {/* <input type="text" placeholder="Enter your message" value={message} onChange={handleMessageChange} /> */}
       <button onClick={handleFileUpload}>Upload</button>
     </div>
   );

@@ -1,38 +1,46 @@
 .app-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #007bff;
-    padding: 10px 20px;
-    color: white;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-  }
-  
-  .home-button,
-  .logout-button {
-    background: none;
-    border: 1px solid white;
-    color: white;
-    font-size: 14px;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 4px;
-    margin: 0 10px;
-    max-width: 100px; /* Adjust as needed for button size */
-  }
-  
-  .user-info {
-    flex-grow: 1;
-    text-align: center;
-    font-size: 16px;
-  }
-  
-  .logout-button:hover,
-  .home-button:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.app-bar-left,
+.app-bar-center,
+.app-bar-right {
+  display: flex;
+  align-items: center;
+}
+
+.app-bar-button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.app-bar-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.app-bar-center {
+  flex-grow: 1;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.app-bar-right .app-bar-button {
+  margin-left: auto;
+}

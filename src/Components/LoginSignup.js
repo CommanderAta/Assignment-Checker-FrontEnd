@@ -25,8 +25,9 @@ const LoginSignup = ({ onLogin }) => {
       const response = await axios.post(url, formData);
       if (isLogin) {
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('role', response.data.role);  // Store user role
         onLogin(); // Call the onLogin prop to update the user state
-        navigate('/courses');
+        navigate('/home');  // Redirect to home after login
       } else {
         alert('User created successfully');
         setIsLogin(true);
@@ -34,14 +35,10 @@ const LoginSignup = ({ onLogin }) => {
     } catch (error) {
       console.error('Error:', error);
       if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
         setError(error.response.data.error);
       } else if (error.request) {
-        // The request was made but no response was received
         setError('No response received from the server. Please try again later.');
       } else {
-        // Something happened in setting up the request that triggered an Error
         setError('An error occurred. Please try again.');
       }
     }
@@ -86,4 +83,3 @@ const LoginSignup = ({ onLogin }) => {
 };
 
 export default LoginSignup;
-
